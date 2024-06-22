@@ -14,12 +14,19 @@
     ],
     "require": {
         "php": "^8.2",
+        "ext-exif": "*",
+        "ext-fileinfo": "*",
+        "ext-gd": "*",
+        "ext-imagick": "*",
+        "ext-intl": "*",
+        "ext-redis": "*",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^11.3",
         "laravel/horizon": "^5.22",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
-        "spatie/laravel-mailcoach": "^8.0"
+        "spatie/laravel-mailcoach": "^8.0",
+        "symfony/mailer": "^7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -58,6 +65,14 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
             "@php artisan mailcoach:publish"
+        ],
+        "predeploy": [
+            "@php artisan storage:link --force"
+        ],
+        "postdeploy": [
+            "@php artisan optimize",
+
+            "@php artisan migrate --force --isolated"
         ]
     },
     "extra": {
